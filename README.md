@@ -1,73 +1,59 @@
-# apartman-booking-app
-Modern Angular web application for a single apartment, featuring online reservations, availability management, secure owner login, reservation administration, and automatic email notifications for both guests and the owner. Developed as a secondary school research project (SOČ).
+# ApartmentBookingSystem
 
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.24.
 
-# 🏡 
-Apartment Booking System
+## Development server
 
-A modern, responsive web application built with **Angular** for managing online reservations for a single cottage. This project is being developed as part of a secondary school research project (SOČ).
+To start a local development server, run:
 
-## 📋 About the Project
+```bash
+ng serve
+```
 
-The goal of this project is to develop a user-friendly web application that simplifies the cottage booking process for guests and reservation management for the owner.
+Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-Visitors will be able to explore information about the cottage, check availability, and submit reservation requests online. The application will also provide automatic email notifications to both the guest and the owner after a reservation is created.
+## Code scaffolding
 
-## ✨ Features
+Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
 
-### 👥 Guest Features
-- View detailed information about the cottage and its facilities.
-- Browse the photo gallery and accommodation details.
-- Check available and booked dates.
-- Create a reservation by selecting arrival and departure dates.
-- Submit contact information through a reservation form.
-- Receive automatic email notifications after submitting a reservation.
+```bash
+ng generate component component-name
+```
 
-### 🔐 Owner Features
-- Secure login to the administration panel.
-- View and manage all reservations.
-- Update reservation statuses.
-- Monitor cottage availability and occupancy.
-- Receive email notifications about new reservations.
+For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
 
-### 📱 User Interface
-- Modern and intuitive design.
-- Responsive layout for desktops, tablets, and mobile devices.
-- Clear navigation and easy access to important information.
+```bash
+ng generate --help
+```
 
-## 🛠️ Technologies
+## Building
 
-- **Angular** – frontend application framework.
-- **TypeScript** – application logic and functionality.
-- **HTML5** – website structure.
-- **CSS3** – styling and responsive layout.
-- **Database and backend** – storing and processing reservation data.
-- **Email service** – sending automated notifications to guests and the owner.
+To build the project run:
 
-*The final technologies and services will be specified according to the actual implementation.*
+```bash
+ng build
+```
 
-## ⚙️ How It Works
+This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
-1. A guest visits the website and explores the apartment.
-2. The guest selects the desired dates of stay.
-3. The guest fills in and submits the reservation form.
-4. The application checks whether the selected dates are available.
-5. The reservation is saved and made accessible to the owner.
-6. Both the guest and the owner receive an email notification.
-7. The owner can manage the reservation through the administration panel.
+## Running unit tests
 
-## 🎯 Project Goals
+To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
-The main objective is to create a functional web application that simplifies the booking process, reduces manual administration, prevents overlapping reservations, and improves communication between guests and the cottage owner.
+```bash
+ng test
+```
 
-## 🚧 Project Status
+## Running end-to-end tests
 
-The application is currently under development. Features will be implemented, tested, and improved throughout the development process.
+For end-to-end (e2e) testing, run:
 
----
+```bash
+ng e2e
+```
 
-**Author:** Your Name
+Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
-**Project:** Secondary School Research Project (SOČ)
+## Additional Resources
 
-**Framework:** Angular
+For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

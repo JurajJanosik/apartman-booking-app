@@ -1,0 +1,273 @@
+
+<header class="navbar">
+  <a class="brand" href="#" (click)="view = 'home'; $event.preventDefault()">
+    <span class="brand-icon">⌂</span>
+    <span>APARTMÁN<span class="brand-sub">Váš oddych v prírode</span></span>
+  </a>
+
+  <nav>
+    <button class="nav-link" (click)="view = 'home'">Domov</button>
+
+    @if (isOwner) {
+      <button class="nav-link" (click)="view = 'admin'">Administrácia</button>
+      <button class="nav-button" (click)="logout()">Odhlásiť sa</button>
+    } @else {
+      <button class="nav-button" (click)="view = 'login'">Prihlásenie majiteľa</button>
+    }
+  </nav>
+</header>
+
+@if (loading) {
+  <main class="loading">Načítavam údaje apartmánu...</main>
+} @else if (view === 'login') {
+  <main class="login-page">
+    <section class="login-card">
+      <span class="eyebrow">SÚKROMNÁ ZÓNA</span>
+      <h1>Prihlásenie majiteľa</h1>
+      <p>Prihlás sa a spravuj informácie o svojom apartmáne.</p>
+
+      <form (ngSubmit)="login()">
+        <label for="email">E-mail</label>
+        <input
+          id="email"
+          type="email"
+          name="email"
+          [(ngModel)]="email"
+          autocomplete="username"
+          required
+        />
+
+        <label for="password">Heslo</label>
+        <input
+          id="password"
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          autocomplete="current-password"
+          required
+        />
+
+        <button class="primary-button full-width" type="submit">
+          Prihlásiť sa
+        </button>
+      </form>
+
+      @if (error) {
+        <p class="error-message">{{ error }}</p>
+      }
+
+      <button class="text-button" (click)="view = 'home'">
+        Späť na stránku apartmánu
+      </button>
+    </section>
+  </main>
+} @else if (view === 'admin' && isOwner) {
+  <main class="admin-page">
+    <div class="page-heading">
+      <span class="eyebrow">SPRÁVA UBYTOVANIA</span>
+      <h1>Administrácia</h1>
+      <p>Tu môžeš upravovať údaje, ktoré uvidia návštevníci.</p>
+    </div>
+
+    @if (message) {
+      <p class="success-message">{{ message }}</p>
+    }
+    @if (error) {
+      <p class="error-message">{{ error }}</p>
+    }
+
+    <form class="admin-form" (ngSubmit)="saveApartment()">
+      <section class="form-section">
+        <h2>Základné informácie</h2>
+
+        <label for="apartmentName">Názov apartmánu</label>
+        <input
+          id="apartmentName"
+          name="apartmentName"
+          [(ngModel)]="apartment.name"
+          required
+        />
+
+        <label for="location">Lokalita</label>
+        <input
+          id="location"
+          name="location"
+          [(ngModel)]="apartment.location"
+          required
+        />
+
+        <label for="description">Opis apartmánu</label>
+        <textarea
+          id="description"
+          name="description"
+          [(ngModel)]="apartment.description"
+          rows="6"
+          required
+        ></textarea>
+      </section>
+
+      <section class="form-section">
+        <h2>Ceny a kapacita</h2>
+
+        <label for="price">Cena za noc (€)</label>
+        <input
+          id="price"
+          type="number"
+          name="price"
+          [(ngModel)]="apartment.pricePerNight"
+          min="0"
+          required
+        />
+
+        <label for="capacity">Počet hostí</label>
+        <input
+          id="capacity"
+          type="number"
+          name="capacity"
+          [(ngModel)]="apartment.capacity"
+          min="1"
+          required
+        />
+      </section>
+
+      <section class="form-section">
+        <h2>Vybavenie</h2>
+        <label for="amenities">Každú položku napíš na nový riadok</label>
+        <textarea
+          id="amenities"
+          name="amenities"
+          [(ngModel)]="amenitiesText"
+          rows="5"
+        ></textarea>
+      </section>
+
+      <section class="form-section">
+        <h2>Fotografie</h2>
+        <p class="helper">
+          Zatiaľ vlož priamy URL odkaz na každú fotografiu, vždy na nový riadok.
+        </p>
+        <label for="images">Odkazy na fotografie</label>
+        <textarea
+          id="images"
+          name="images"
+          [(ngModel)]="imagesText"
+          rows="5"
+          placeholder="https://example.com/fotografia.jpg"
+        ></textarea>
+      </section>
+
+      <button class="primary-button" type="submit" [disabled]="saving">
+        {{ saving ? 'Ukladám...' : 'Uložiť zmeny' }}
+      </button>
+    </form>
+
+    <button class="text-button" (click)="view = 'home'">
+      Zobraziť verejnú stránku
+    </button>
+  </main>
+} @else {
+  <main>
+    <section class="hero">
+      @if (apartment.images.length > 0) {
+        <img
+          class="hero-image"
+          [src]="apartment.images[0]"
+          alt="Fotografia apartmánu"
+        />
+      }
+
+      <div class="hero-overlay"></div>
+
+      <div class="hero-content">
+        <span class="eyebrow light">MIESTO NA VÁŠ ODDYCH</span>
+        <h1>{{ apartment.name }}</h1>
+        <p class="hero-location">⌖ {{ apartment.location }}</p>
+        <p class="hero-description">{{ apartment.description }}</p>
+        <button
+          class="primary-button"
+          (click)="view = 'login'"
+        >
+          Informácie o ubytovaní
+        </button>
+      </div>
+
+      <div class="hero-bottom">
+        <span>POHODLIE</span>
+        <span>PRÍRODA</span>
+        <span>ODDYCH</span>
+      </div>
+    </section>
+
+    <section class="intro-section">
+      <span class="eyebrow">VÁŠ POBYT</span>
+      <h2>Miesto, kde spomalíte.</h2>
+      <p>
+        Doprajte si príjemný pobyt v apartmáne, ktorý spája pohodlie,
+        súkromie a atmosféru okolitej prírody.
+      </p>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-icon">⌂</span>
+          <h3>Pohodlné ubytovanie</h3>
+          <p>Priestor pripravený na váš oddych.</p>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-icon">♧</span>
+          <h3>Kapacita</h3>
+          <p>Ubytovanie pre {{ apartment.capacity }} hostí.</p>
+        </article>
+
+        <article class="feature-card">
+          <span class="feature-icon">€</span>
+          <h3>Cena za noc</h3>
+          <p>{{ apartment.pricePerNight }} € za noc.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="amenities-section">
+      <div>
+        <span class="eyebrow">VYBAVENIE</span>
+        <h2>Všetko potrebné pre pohodlný pobyt</h2>
+      </div>
+
+      <ul class="amenities-list">
+        @for (item of apartment.amenities; track item) {
+          <li><span>✓</span>{{ item }}</li>
+        }
+      </ul>
+    </section>
+
+    @if (apartment.images.length > 0) {
+      <section class="gallery-section">
+        <span class="eyebrow">GALÉRIA</span>
+        <h2>Pozrite si apartmán</h2>
+
+        <div class="gallery-grid">
+          @for (image of apartment.images; track image) {
+            <img [src]="image" alt="Fotografia apartmánu" loading="lazy" />
+          }
+        </div>
+      </section>
+    }
+
+    <section class="booking-section">
+      <span class="eyebrow light">TEŠÍME SA NA VÁS</span>
+      <h2>Naplánujte si svoj pobyt.</h2>
+      <p>
+        Cena od {{ apartment.pricePerNight }} € za noc.
+        Maximálna kapacita: {{ apartment.capacity }} hostí.
+      </p>
+      <p class="booking-note">
+        Rezervačný formulár doplníme v ďalšej fáze projektu.
+      </p>
+    </section>
+  </main>
+}
+
+<footer class="footer">
+  <span>© {{ apartment.name }}</span>
+  <span>Vytvorené s dôrazom na pohodlie.</span>
+</footer>
