@@ -2,7 +2,7 @@
 Modern Angular web application for a single apartment, featuring online reservations, availability management, secure owner login, reservation administration, and automatic email notifications for both guests and the owner. Developed as a secondary school research project (SOČ).
 
 
-# 🏡 Cottage Booking System
+# 🏡 Apartman Booking System
 
 A modern, responsive web application built with **Angular** for managing online reservations for a single cottage. This project is being developed as part of a secondary school research project (SOČ).
 
